@@ -115,13 +115,7 @@ class Reduction:
         transformer = FactorAnalysis(n_components=self.n_components, random_state=0)
         transformed_data = transformer.fit_transform(data)
         r = ortho_rotation(transformed_data)
-        #r = np.array([[0.96,0.279],[-0.279,0.96]])
-        #r = np.array([[0.408, -0.91], [0.91, 0.408]])
         transformed_data = np.matmul(r, np.transpose(transformed_data))
-        #corr = pd.DataFrame(np.concatenate((data.values, transformed_data), axis=1)).corr()
-
-        #w = Writer(corr, sheet='Sheet2', file='corr.xlsx')
-        #w.write_to_excel()
         return transformed_data
 
 
