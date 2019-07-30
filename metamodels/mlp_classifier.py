@@ -1,12 +1,12 @@
 import pandas as pd
 import seaborn as sns
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, ActivityRegularization
+from keras.layers import Dense, Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.preprocessing import scale
 import matplotlib.pyplot as plt
 import keras_metrics
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, cohen_kappa_score
 from sklearn.model_selection import cross_val_score
 from keras.utils import plot_model
 
@@ -80,6 +80,7 @@ class Training:
         results = self.estimator.predict(self.X)
 
         cm = confusion_matrix(self.Y, results)
+        kappa = cohen_kappa_score(self.Y, results)
         print(cm)
         tn, fp, fn, tp = cm.ravel()
         acc = (tp + tn) / (tp + tn + fp + fn)
@@ -91,6 +92,7 @@ class Training:
         print('prec ', prec)
         print('rec ', rec)
         print('f1 ', f1)
+        print('kappa', kappa)
         print('loss ', loss)
 
         if to_plot == True:
